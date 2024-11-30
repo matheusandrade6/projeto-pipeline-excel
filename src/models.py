@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Float, String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from database import Base
+from src.database import Base
 
 class DimProduto(Base):
     __tablename__ = 'dim_products'
@@ -14,9 +14,9 @@ class DimProduto(Base):
     subgrupo_descricao = Column(String)
 
     #relationships
-    fact_sales = relationship('FactSales', back_populates='product')
-    fact_margin = relationship('FactMargin', back_populates='product')
-    fact_storage = relationship('FactStorage', back_populates='product')
+    fact_sales = relationship('FactSales', back_populates='product', cascade='all, delete-orphan')
+    fact_margin = relationship('FactMargin', back_populates='product', cascade='all, delete-orphan')
+    fact_storage = relationship('FactStorage', back_populates='product', cascade='all, delete-orphan')
 
 
 class FactSales(Base):
@@ -28,7 +28,7 @@ class FactSales(Base):
     quantidade = Column(Integer)
 
     #relationships
-    produto = relationship('DimProduct', back_populates='sales', cascade='all, delete_orphan')
+    produto = relationship('DimProduct', back_populates='sales')
 
 class FactMargin(Base):
     __tablename__ = 'fact_margin'
@@ -38,7 +38,7 @@ class FactMargin(Base):
     valor_margem = Column(Float)
 
     #relationships
-    produto = relationship('DimProduct', back_populates='margin', cascade='all, delete_orphan')
+    produto = relationship('DimProduct', back_populates='margin')
 
 class FactStorage(Base):
     __tablename__ = 'fact_storage'
@@ -48,4 +48,4 @@ class FactStorage(Base):
     quantidade = Column(Float)
 
     #relationships
-    produto = relationship('DimProduct', back_populates='storage', cascade='all, delete_orphan')
+    produto = relationship('DimProduct', back_populates='storage')
