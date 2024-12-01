@@ -14,9 +14,9 @@ class DimProduto(Base):
     subgrupo_descricao = Column(String)
 
     #relationships
-    fact_sales = relationship('FactSales', back_populates='product', cascade='all, delete-orphan')
-    fact_margin = relationship('FactMargin', back_populates='product', cascade='all, delete-orphan')
-    fact_storage = relationship('FactStorage', back_populates='product', cascade='all, delete-orphan')
+    fact_sales = relationship('FactSales', back_populates='produto', cascade='all, delete-orphan')
+    fact_margin = relationship('FactMargin', back_populates='produto', cascade='all, delete-orphan')
+    fact_storage = relationship('FactStorage', back_populates='produto', cascade='all, delete-orphan')
 
 
 class FactSales(Base):
@@ -28,7 +28,7 @@ class FactSales(Base):
     quantidade = Column(Integer)
 
     #relationships
-    produto = relationship('DimProduct', back_populates='sales')
+    produto = relationship('DimProduto', back_populates='fact_sales')
 
 class FactMargin(Base):
     __tablename__ = 'fact_margin'
@@ -38,14 +38,14 @@ class FactMargin(Base):
     valor_margem = Column(Float)
 
     #relationships
-    produto = relationship('DimProduct', back_populates='margin')
+    produto = relationship('DimProduto', back_populates='fact_margin')
 
 class FactStorage(Base):
     __tablename__ = 'fact_storage'
     id = Column(Integer, primary_key=True, index=True)
     id_produto = Column(String, ForeignKey('dim_products.id'))
-    data = data = Column(DateTime)
+    data = Column(DateTime)
     quantidade = Column(Float)
 
     #relationships
-    produto = relationship('DimProduct', back_populates='storage')
+    produto = relationship('DimProduto', back_populates='fact_storage')
