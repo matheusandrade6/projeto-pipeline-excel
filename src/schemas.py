@@ -25,5 +25,4 @@ class FactMarginSchema(BaseModel):
     
 class FactStorageSchema(BaseModel):
     id_produto: str
-    data: datetime
     quantidade: float
