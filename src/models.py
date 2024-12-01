@@ -44,7 +44,6 @@ class FactStorage(Base):
     __tablename__ = 'fact_storage'
     id = Column(Integer, primary_key=True, index=True)
     id_produto = Column(String, ForeignKey('dim_products.id'))
-    data = Column(DateTime)
     quantidade = Column(Float)
 
     #relationships
